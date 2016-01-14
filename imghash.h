@@ -17,7 +17,7 @@ uint64_t imghash(char* file) {
     for(int i=0; i<w; i++) {
         for(int j=0; j<h; j++) {
             for(int k=0; k<3; k++)
-                A[k] = img(i, j, 0, std::min(k, c-1))/64;        
+                A[k] = img(i, j, 0, std::min(k, c-1))/4;        
             
             MurmurHash3_x64_128(A, 3, 0, B);
             B[0] ^= B[1];
