@@ -8,7 +8,7 @@
 #define HUE 8
 #define SATURATION 3
 #define VALUE 3
-#define POSITION 8
+#define POSITION 4
 #define THRESHOLD 10
 
 using namespace std;

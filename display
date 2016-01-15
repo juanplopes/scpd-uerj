@@ -1,17 +1,29 @@
 #!/usr/bin/env python
 
 print '<style>body{font-family:sans-serif;}</style>'
+
 try:
+    groups = []
     while True:
         line = raw_input()
         if line is None: break
 
         n = int(line)
-        print '<div style="border-bottom:10px solid black; padding: 10px">'
+        group = []
         for i in range(n):
             line = raw_input()
             dist, path = line.split(' ', 1)
-            print '<div style="display:inline-block; padding:5px; border: 1px solid gray; text-align: center"><img src="{}"/><div>{}</div><div>score:{}</div></div>'.format(path, path, 1-float(dist)/64.0)
-        print '</div>'
+            group.append((int(dist), path))
+        groups.append(group)
+       
 except EOFError:
     pass
+
+groups = sorted(groups, key = lambda g: sum(d for d, _ in g) / float(len(g)))
+    
+for group in groups:
+    print '<div style="border-bottom:10px solid black; padding: 10px">'
+    for dist, path in group:
+        print '<div style="display:inline-block; padding:5px; border: 1px solid gray; text-align: center"><img src="{}"/><div>{}</div><div>score:{}</div></div>'.format(path, path, 1-float(dist)/64.0)
+    print '</div>'
+
