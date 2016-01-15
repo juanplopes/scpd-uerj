@@ -35,3 +35,22 @@ int recvInt(int from) {
     MPI_Recv(&n, 1, MPI_INT, from, 1, MPI_COMM_WORLD, &stat);  
     return n;
 }
+
+struct Stats {
+    int node, images, time;
+    
+    Stats() {}
+    Stats(int node, int images, int time) : node(node), images(images), time(time) {}
+};
+
+void sendStats(const Stats stats, int to) {
+    MPI_Send(&stats, sizeof(Stats), MPI_BYTE, to, 2, MPI_COMM_WORLD);
+}
+
+Stats recvStats() {
+    MPI_Status stat;
+    Stats res;
+
+    MPI_Recv(&res, sizeof(Stats), MPI_BYTE, MPI_ANY_SOURCE, 2, MPI_COMM_WORLD, &stat);  
+    return res;
+}
