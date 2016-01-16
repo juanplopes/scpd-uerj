@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-print '<style>body{font-family:sans-serif;}</style>'
-
 try:
     groups = []
     while True:
@@ -19,11 +17,10 @@ try:
 except EOFError:
     pass
 
-groups = sorted(groups, key = lambda g: sum(d for d, _ in g) / float(len(g)))
-    
+print '<style>body{font-family:sans-serif; font-size: 10px} .group:hover {background-color: #eef; border: 3px solid #449 !important }</style>'
 for group in groups:
-    print '<div style="border-bottom:10px solid black; padding: 10px">'
+    print '<div class="group" style="display:inline-block; padding:10px; border: 3px dotted #aaa; margin: 3px">'
     for dist, path in group:
-        print '<div style="display:inline-block; padding:5px; border: 1px solid gray; text-align: center"><img src="{}"/><div>{}</div><div>score:{}</div></div>'.format(path, path, 1-float(dist)/64.0)
+        print ' <div class="img" style="display:inline-block; padding:5px; border: 1px solid gray; text-align: center"><img style="max-width:128px; max-height: 128px" src="{}"/><div>{}</div><div>score:{}</div></div>'.format(path, path, 1-float(dist)/64.0)
     print '</div>'
 

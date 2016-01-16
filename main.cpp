@@ -90,13 +90,35 @@ void coordinator(int workers) {
         sendInt(-1, i);
     }
 
+    vector<vector<uint64_t >> selected;
     for(auto it = images.S.begin(); it!=images.S.end(); it++) {
         if (it->second.size() == 1) continue;
+        selected.push_back(it->second);
+    }    
 
-        cout << it->second.size() << endl;
+    for(int i=0; i<selected.size()-1; i++) {
+        uint64_t value = images.values[selected[i][0]];
+        int best = i+1; 
+        double score = 100;
+        
+        for(int j=i+1; j<selected.size(); j++) {
+            double thisScore = images.difference(selected[i], selected[j]);
+            if (thisScore < score) {
+                best = j;
+                score = thisScore;
+            }
+        }
+        
+        swap(selected[i+1], selected[best]);
+    }
 
-        for(vector<uint64_t>::iterator jt = it->second.begin(); jt != it->second.end(); jt++) {
-            cout << images.SC[*jt] << " " << names[*jt] <<endl;
+
+    for(int i=0; i<selected.size(); i++) {
+        cout << selected[i].size() << endl;
+
+        for(int j=0; j<selected[i].size(); j++) {
+            auto x = selected[i][j];
+            cout << images.SC[x] << " " << names[x] <<endl;
         }
     }
 }
