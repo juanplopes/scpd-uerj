@@ -9,7 +9,7 @@
 #define SATURATION 3
 #define VALUE 3
 #define POSITION 3
-#define THRESHOLD 8
+#define THRESHOLD 10
 
 using namespace std;
 
