@@ -95,6 +95,7 @@ void coordinator(int workers) {
         if (it->second.size() == 1) continue;
         selected.push_back(it->second);
     }    
+    if (selected.size() == 0) return;
 
     for(int i=0; i<selected.size()-1; i++) {
         uint64_t value = images.values[selected[i][0]];

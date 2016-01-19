@@ -10,8 +10,8 @@ while test -n "$1"
 do
     case "$1" in
         compile)
-            echo "mpic++.mpich main.cpp -lpthread -lX11 -std=c++11"
-            mpic++.mpich main.cpp -lpthread -lX11 -std=c++11
+            echo "mpic++.mpich main.cpp -std=c++11"
+            mpic++.mpich main.cpp -std=c++11
     ;;
         test)
             echo "mpirun.mpich -n $2 ./a.out"

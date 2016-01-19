@@ -3,8 +3,10 @@
 #include <set>
 #include <vector>
 #include <bitset>
-#include "CImg.h"
+#include <iostream>
 #include "murmur.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 #define HUE 16
 #define SATURATION 3
 #define VALUE 3
@@ -89,7 +91,8 @@ inline hsl rgb2hsl(rgb c1)
 }
 
 uint64_t imghash(char* file) {
-    cimg_library::CImg<unsigned char> img(file);
+    int w, h, c;
+    unsigned char* img = stbi_load(file, &w, &h, &c, 3);
  
     unsigned char A[5];
     uint64_t B[2];
@@ -98,12 +101,11 @@ uint64_t imghash(char* file) {
     memset(A, 0, sizeof A);
     memset(R, 0, sizeof R);
 
-    int h = img.height(), w = img.width(), c = img.spectrum();
-
-    for(int i=0; i<w; i++) {
-        for(int j=0; j<h; j++) {
-            for(int k=0; k<3; k++)
-                A[k] = img(i, j, 0, std::min(k, c-1));        
+    for(int i=0; i<h; i++) {
+        for(int j=0; j<w; j++) {
+            A[0] = img[3*(i*w+j)+0];
+            A[1] = img[3*(i*w+j)+1];
+            A[2] = img[3*(i*w+j)+2];
 
             rgb x1 = rgb(A[0], A[1], A[2]);
             hsl x2 = rgb2hsl(x1);
@@ -123,6 +125,8 @@ uint64_t imghash(char* file) {
             }
         }
     }
+    
+    stbi_image_free(img);
 
     uint64_t answer = 0;
     for(int i=0; i<64; i++) {
