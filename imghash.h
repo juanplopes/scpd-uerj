@@ -112,8 +112,8 @@ uint64_t imghash(char* file) {
             A[0] = (unsigned char)(x2.h / 360.0 * HUE);
             A[1] = (unsigned char)(x2.s * SATURATION);
             A[2] = (unsigned char)(x2.l * VALUE);
-            A[3] = (int)((i/(double)w)*POSITION);
-            A[4] = (int)((j/(double)h)*POSITION);
+            A[3] = (int)((i/(double)h)*POSITION);
+            A[4] = (int)((j/(double)w)*POSITION);
            
             MurmurHash3_x64_128(A, 5, 0, B);
             for(int k=0; k<64; k++) {
